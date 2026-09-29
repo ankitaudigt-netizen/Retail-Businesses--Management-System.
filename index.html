@@ -1,145 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetailOS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-        }
+<title>RetailOS</title>
 
-        header {
-            background: #111827;
-            color: white;
-            padding: 18px;
-            font-size: 24px;
-            font-weight: bold;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        .container {
-            padding: 20px;
-            max-width: 1000px;
-            margin: auto;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #111827;
+}
 
-        .search {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-        }
+header {
+    background: #111827;
+    color: white;
+    padding: 18px;
+    font-size: 24px;
+    font-weight: bold;
+}
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
 
-        .product {
-            background: white;
-            padding: 18px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
+.search {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
 
-        .product h3 {
-            margin-top: 0;
-        }
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
 
-        button {
-            border: none;
-            background: #2563eb;
-            color: white;
-            padding: 10px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+.product {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
 
-        .cart {
-            background: white;
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 12px;
-        }
+.product h3 {
+    margin-top: 0;
+}
 
-        .total {
-            font-size: 22px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
+.price {
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.cart {
+    background: white;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.quantity button {
+    padding: 5px 10px;
+    margin: 0 4px;
+}
+
+.total {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.bill {
+    margin-top: 15px;
+    background: #16a34a;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    🛒 RetailOS
+🛒 RetailOS
 </header>
 
 <div class="container">
 
-    <h2>Counter Billing</h2>
+<h2>Counter Billing</h2>
 
-    <input
-        class="search"
-        type="text"
-        placeholder="Search product..."
-    >
+<input
+    id="search"
+    class="search"
+    type="text"
+    placeholder="Search product..."
+    oninput="searchProducts()"
+>
 
-    <div class="products">
+<div class="products" id="products">
 
-        <div class="product">
-            <h3>Biscuits</h3>
-            <p>₹30</p>
-            <button>Add</button>
-        </div>
-
-        <div class="product">
-            <h3>Milk</h3>
-            <p>₹60</p>
-            <button>Add</button>
-        </div>
-
-        <div class="product">
-            <h3>Cold Drink</h3>
-            <p>₹40</p>
-            <button>Add</button>
-        </div>
-
-        <div class="product">
-            <h3>Chips</h3>
-            <p>₹20</p>
-            <button>Add</button>
-        </div>
-
+    <div class="product" data-name="Biscuits">
+        <h3>Biscuits</h3>
+        <p class="price">₹30</p>
+        <button onclick="addToCart('Biscuits', 30)">
+            Add
+        </button>
     </div>
 
-    <div class="cart">
-
-        <h2>Cart</h2>
-
-        <p>No products added yet.</p>
-
-        <div class="total">
-            Total: ₹0
-        </div>
-
-        <br>
-
-        <button>
-            Generate Bill
+    <div class="product" data-name="Milk">
+        <h3>Milk</h3>
+        <p class="price">₹60</p>
+        <button onclick="addToCart('Milk', 60)">
+            Add
         </button>
+    </div>
 
+    <div class="product" data-name="Cold Drink">
+        <h3>Cold Drink</h3>
+        <p class="price">₹40</p>
+        <button onclick="addToCart('Cold Drink', 40)">
+            Add
+        </button>
+    </div>
+
+    <div class="product" data-name="Chips">
+        <h3>Chips</h3>
+        <p class="price">₹20</p>
+        <button onclick="addToCart('Chips', 20)">
+            Add
+        </button>
     </div>
 
 </div>
+
+<div class="cart">
+
+<h2>🛒 Cart</h2>
+
+<div id="cartItems">
+    <p>No products added yet.</p>
+</div>
+
+<div class="total">
+    Total: ₹<span id="total">0</span>
+</div>
+
+<button class="bill" onclick="generateBill()">
+    Generate Bill
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let cart = [];
+
+function addToCart(name, price) {
+
+    let existing = cart.find(item => item.name === name);
+
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({
+            name: name,
+            price: price,
+            quantity: 1
+        });
+    }
+
+    updateCart();
+}
+
+function changeQuantity(name, change) {
+
+    let item = cart.find(item => item.name === name);
+
+    if (!item) return;
+
+    item.quantity += change;
+
+    if (item.quantity <= 0) {
+        cart = cart.filter(item => item.name !== name);
+    }
+
+    updateCart();
+}
+
+function updateCart() {
+
+    let cartItems = document.getElementById("cartItems");
+    let totalElement = document.getElementById("total");
+
+    cartItems.innerHTML = "";
+
+    let total = 0;
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML =
+            "<p>No products added yet.</p>";
+
+    } else {
+
+        cart.forEach(item => {
+
+            let itemTotal =
+                item.price * item.quantity;
+
+            total += itemTotal;
+
+            cartItems.innerHTML += `
+                <div class="cart-item">
+
+                    <div>
+                        <strong>${item.name}</strong>
+                        <br>
+                        ₹${item.price} × ${item.quantity}
+                    </div>
+
+                    <div class="quantity">
+
+                        <button onclick="changeQuantity('${item.name}', -1)">
+                            −
+                        </button>
+
+                        ${item.quantity}
+
+                        <button onclick="changeQuantity('${item.name}', 1)">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+        });
+    }
+
+    totalElement.innerText = total;
+}
+
+function generateBill() {
+
+    if (cart.length === 0) {
+
+        alert("Cart is empty.");
+
+        return;
+    }
+
+    let total = cart.reduce(
+        (sum, item) =>
+        sum + item.price * item.quantity,
+        0
+    );
+
+    alert(
+        "RetailOS Bill\n\n" +
+        "Total: ₹" + total +
+        "\n\nThank you!"
+    );
+}
+
+function searchProducts() {
+
+    let search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    let products =
+        document.querySelectorAll(".product");
+
+    products.forEach(product => {
+
+        let name =
+            product.dataset.name.toLowerCase();
+
+        if (name.includes(search)) {
+            product.style.display = "block";
+        } else {
+            product.style.display = "none";
+        }
+
+    });
+}
+
+</script>
 
 </body>
 </html>
