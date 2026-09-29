@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetailOS</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .search {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .product {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .product h3 {
+            margin-top: 0;
+        }
+
+        button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .cart {
+            background: white;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    🛒 RetailOS
+</header>
+
+<div class="container">
+
+    <h2>Counter Billing</h2>
+
+    <input
+        class="search"
+        type="text"
+        placeholder="Search product..."
+    >
+
+    <div class="products">
+
+        <div class="product">
+            <h3>Biscuits</h3>
+            <p>₹30</p>
+            <button>Add</button>
+        </div>
+
+        <div class="product">
+            <h3>Milk</h3>
+            <p>₹60</p>
+            <button>Add</button>
+        </div>
+
+        <div class="product">
+            <h3>Cold Drink</h3>
+            <p>₹40</p>
+            <button>Add</button>
+        </div>
+
+        <div class="product">
+            <h3>Chips</h3>
+            <p>₹20</p>
+            <button>Add</button>
+        </div>
+
+    </div>
+
+    <div class="cart">
+
+        <h2>Cart</h2>
+
+        <p>No products added yet.</p>
+
+        <div class="total">
+            Total: ₹0
+        </div>
+
+        <br>
+
+        <button>
+            Generate Bill
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+</html>
